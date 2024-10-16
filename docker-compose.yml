@@ -42,36 +42,20 @@ services:
       start_period: 30s
     
       
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx
-  #   ports:
-  #     - "81:80"
-  #     - "444:443"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #     - ./nginx/ssl:/etc/letsencrypt
-  #     - ./nginx/ssl-data:/data/letsencrypt
-  #     - ./certbot:/var/www/certbot
-  #   depends_on:
-  #     - web-breizhrp
-  #   networks:
-  #     - webnet
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
 
-
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   ports:
-  #     - "82:80"
-  #     - "8843:443"
-  #   entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done"
-  #   volumes:
-  #     - ./nginx/ssl:/etc/letsencrypt
-  #     - ./nginx/ssl-data:/data/letsencrypt
-  #     - ./certbot:/var/www/certbot
-  #   networks:
-  #     - webnet
+  # Email:    admin@example.com
+  # Password: Password: changeme
+  # WebUI:    http://localhost:81
 
 networks:
   webnet:
