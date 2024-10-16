@@ -3,6 +3,7 @@ services:
     build: 
       context: ./njs-app1
       dockerfile: Dockerfile
+    restart: unless-stopped
     container_name: njs-app1
     ports:
       - "3001:3000"
@@ -10,41 +11,58 @@ services:
       - ./njs-app1:/app
     environment:
       - NODE_ENV=development
-    restart: always
     networks:
       - webnet
-    healthcheck:
-      test: ["executable", "arg"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
     
+  njs-app2:
+    build: 
+      context: ./njs-app2
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: njs-app2
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./njs-app2:/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - webnet 
+
+  njs-app3:
+    build: 
+      context: ./njs-app3
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: njs-app3
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./njs-app3:/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - webnet
+
   njs-appX:
     build:
       context: ./njs-appX
       dockerfile: Dockerfile
+    restart: always
     container_name: njs-appX
     ports:
       - "300X:3000"
     volumes:
       - ./njs-appX:/app
     environment:
-      - NODE_ENV=development  
-    restart: always
+      - NODE_ENV=development
     networks:
-      - webnet
-    healthcheck:
-      test: ["executable", "arg"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    
+      - webnet    
       
   npm:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
+    container_name: npm-reverse-proxy
     ports:
       - '80:80'
       - '81:81'
@@ -52,7 +70,12 @@ services:
     volumes:
       - ./npm/data:/data
       - ./npm/letsencrypt:/etc/letsencrypt
-
+    depends_on:
+      - njs-app1
+      - njs-appX
+    networks:
+      - webnet
+  
   # Email:    admin@example.com
   # Password: Password: changeme
   # WebUI:    http://localhost:81
