@@ -75,6 +75,10 @@ services:
       - njs-appX
     networks:
       - webnet
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
   
   # Email:    admin@example.com
   # Password: Password: changeme
