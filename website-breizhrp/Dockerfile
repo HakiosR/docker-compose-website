@@ -4,11 +4,18 @@ LABEL maintainer="BreizhRP"
 LABEL description="Docker image for BreizhRP website"
 LABEL environment="recette"
 
-RUN apk add --no-cache bash build-base
+# MaJ Container
+RUN apk update && apk upgrade && apk add --no-cache bash build-base
+
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm ci
+RUN npm install
+
+# Add PM2 for my project
+RUN npm install pm2 -g
+
 COPY . .
 EXPOSE 3000
 
-CMD [ "node", "app.js" ]
+CMD [ "pm2-runtime", "app.js" ]
