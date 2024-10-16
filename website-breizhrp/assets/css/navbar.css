@@ -1,0 +1,35 @@
+/* Navbar */
+body header .navbar {
+  background-color: var(--color-blue);
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+  
+body header .navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+  
+body header .navbar li {
+  margin: 0 15px;
+}
+  
+body header .navbar a {
+  color: var(--color-white);
+  font-weight: 600;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+  
+body header .navbar a:hover {
+  background-color: var(--color-gold);
+  color: var(--color-white);
+  border-radius: 5px;
+}
