@@ -1,7 +1,7 @@
 FROM node:22-alpine
 LABEL version="1.0"
-LABEL maintainer="BreizhRP"
-LABEL description="Docker image for BreizhRP website"
+LABEL maintainer="HakiosR"
+LABEL description="Docker image for AppX website"
 LABEL environment="recette"
 
 # MaJ Container
