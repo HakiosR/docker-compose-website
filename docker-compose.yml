@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
     container_name: njs-app2
     ports:
-      - "3001:3000"
+      - "3002:3000"
     volumes:
       - ./njs-app2:/app
     environment:
@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
     container_name: njs-app3
     ports:
-      - "3001:3000"
+      - "3003:3000"
     volumes:
       - ./njs-app3:/app
     environment:
@@ -44,20 +44,20 @@ services:
     networks:
       - webnet
 
-  njs-appX:
-    build:
-      context: ./njs-appX
-      dockerfile: Dockerfile
-    restart: always
-    container_name: njs-appX
-    ports:
-      - "300X:3000"
-    volumes:
-      - ./njs-appX:/app
-    environment:
-      - NODE_ENV=development
-    networks:
-      - webnet    
+  # njs-appX:
+  #   build:
+  #     context: ./njs-appX
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: njs-appX
+  #   ports:
+  #     - "300X:3000"
+  #   volumes:
+  #     - ./njs-appX:/app
+  #   environment:
+  #     - NODE_ENV=development
+  #   networks:
+  #     - webnet    
       
   npm:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -72,7 +72,8 @@ services:
       - ./npm/letsencrypt:/etc/letsencrypt
     depends_on:
       - njs-app1
-      - njs-appX
+      - njs-app2
+      - njs-app3 
     networks:
       - webnet
     healthcheck:
@@ -80,8 +81,8 @@ services:
       interval: 10s
       timeout: 3s
   
-  # Email:    admin@example.com
-  # Password: Password: changeme
+  # Email:    
+  # Password: Password: chadmin@example.comangeme
   # WebUI:    http://localhost:81
 
 networks:
