@@ -74,6 +74,7 @@ services:
       - njs-app1
       - njs-app2
       - njs-app3 
+      # - njs-appX
     networks:
       - webnet
     healthcheck:
