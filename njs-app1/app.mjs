@@ -1,10 +1,11 @@
-import express from 'express'; 
-import { router } from './routes/njs-routes.mjs';
+import express from 'express';
 
 const app = express();
 const port = 3000;
 
-app.use('/', router)
+app.get('/', (req, res) => {
+  res.send('Hello World! Welcome to NodeJS App1');
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
